@@ -126,8 +126,8 @@ def generateFPGrowth(df, features, dates, min_sup, min_lift):
             print(antecedents + ' -> ' + consequents)
             rules_list.append((key, antecedents, consequents))
 
-    # rules_list.sort(key=lambda x: (x[2], x[1])) # accidents
-    rules_list.sort(key=lambda x: (x[1], x[2])) # crimes
+    rules_list.sort(key=lambda x: (x[2], x[1])) # accidents
+    # rules_list.sort(key=lambda x: (x[1], x[2])) # crimes
     new_rules = dict()
     for x in rules_list:
         if 'Not Reported' in x[1] or 'Not Reported' in x[2]:
