@@ -1,0 +1,156 @@
+#tooltip {
+    position: absolute;
+    top: 350px;
+    right: 650px;
+    height: 40px;
+    width: 150px;
+    background-color: white;
+    border-radius: 5px;
+    text-align: center;
+    display: none;
+    color:black;
+    font-size: 12px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+@font-face {
+font-family: "Avenir";
+src: url("/static/font/avenirnextregular.woff") format("woff"),
+  url("/static/font/avenirnextregular.ttf") format("truetype"),
+  url("/static/font/avenirnextregular.eot") format("embedded-opentype");
+font-weight: 400;
+font-style: normal;
+font-display: swap;
+}
+html {
+font-family: "Avenir", Helvetica, Arial, sans-serif;
+}
+#scatterplot-controls-x,
+#scatterplot-controls-y {
+display: none;
+position: absolute;
+}
+
+.component-header {
+height: 1.5em;
+width: 100%;
+line-height: 1.4em;
+border-bottom: solid 1px gray;
+}
+
+.cluster_box,
+.timeline-box {
+transition: all 0.4s ease-in-out;
+}
+#cluster-view-header,
+#cluster-heatmap-header {
+height: calc((100% - 1.5em - 10px) * 0.2);
+}
+#cluster-view,
+#cluster-heatmap {
+height: calc((100% - 1.5em - 10px) * 0.8);
+scrollbar-width: thin;
+scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+overflow-x: hidden;
+/*display: flex;
+justify-content: center;*/ /* horizontal center */
+/*align-items: center;*/ /* vertical center */
+width: 100%; /* optional: full width */
+position: relative;
+}
+
+#cluster-view-rules-header,
+#cluster-heatmap-rules-header {
+height: calc((100% - 1.5em - 10px) * 0.2);
+}
+
+#cluster-view-rules,
+#cluster-heatmap-rules {
+height: calc((100% - 1.5em - 10px) * 0.8);
+scrollbar-width: thin;
+scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+overflow-x: hidden;
+}
+
+#cluster-view::-webkit-scrollbar,
+#cluster-heatmap::-webkit-scrollbar {
+width: 0;
+background: transparent;
+}
+
+#cluster-view:hover::-webkit-scrollbar,
+#cluster-heatmap:hover::-webkit-scrollbar {
+width: 8px;
+}
+
+#cluster-view:hover::-webkit-scrollbar-track,
+#cluster-heatmap:hover::-webkit-scrollbar-track {
+background: transparent;
+}
+
+#cluster-view:hover::-webkit-scrollbar-thumb,
+#cluster-heatmap:hover::-webkit-scrollbar-thumb {
+background-color: rgba(0, 0, 0, 0.3);
+border-radius: 4px;
+}
+
+#map-view,
+#rules-map-view,
+#control-panel,
+#scatterplot-content {
+height: calc(100% - 1.5em);
+display: flex;
+justify-content: center; /* horizontal center */
+align-items: center; /* vertical center */
+width: 100%; /* optional: full width */
+position: relative;
+}
+#llm-results {
+ height: calc(100% - 1.5em);
+ display: flex;
+ flex-direction: column;
+ width: 100%;
+ position: relative;
+ padding: 10px;
+ overflow-y: auto;
+ scrollbar-width: thin;
+ scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+}
+
+#llm-results::-webkit-scrollbar {
+ width: 8px;
+}
+
+#llm-results::-webkit-scrollbar-track {
+ background: transparent;
+}
+
+#llm-results::-webkit-scrollbar-thumb {
+ background-color: rgba(0, 0, 0, 0.3);
+ border-radius: 4px;
+}
+
+#content svg{
+ display: inline-block;
+ padding-bottom: 3px;
+}
+#rules-content svg {
+display: inline-block;
+padding-bottom: 3px;
+}
+/*.pika-lendar{
+ background-color: white;
+ color: var(	--color-neutral);
+ border: transparent;
+}*/
+/* Destacar la tarjeta seleccionada del dataset con borde azul fuerte y sombra */
+input[name="dataset"].peer:checked + label {
+border-color: #2563eb !important; /* blue-600 */
+border-width: 3px !important;
+box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+z-index: 1;
+}
+/* Optional: make hover border more visible too */
+input[name="dataset"].peer + label:hover {
+border-color: #60a5fa; /* Tailwind's blue-400 */
+}

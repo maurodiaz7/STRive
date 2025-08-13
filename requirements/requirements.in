@@ -1,0 +1,9 @@
+Flask
+pandas
+numpy
+mlxtend
+networkx
+python-louvain
+openai	
+google-genai
+python-dotenv

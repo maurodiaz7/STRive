@@ -1,2 +1,6 @@
-# STRive
-Code for STRive: An association rule-based system for the exploration of spatiotemporal categorical data
+# Visualization of association rules
+
+Run with 
+~~~sh
+python main.py
+~~~
