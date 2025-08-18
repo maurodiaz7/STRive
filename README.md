@@ -48,7 +48,7 @@ The first case study employs the files in the `accidents` folder. Upon downloadi
    - Attributes: `LitCond`, `Weather` and `Drunk`.
    - Thresholds: Min sup: `0.5`, Min lift: `1.05`, Res: `1.0`.
    - Dates: `2016-01` to `2022-12`.
-   The tool uses these configuration options as defaults, except for the attributes. Select the specified attributes and click on **Filter**.
+The tool uses these configuration options as defaults, except for the attributes. Select the specified attributes and click on **Filter**.
 6. The tool will process the data to generate rules and clusters. Once processing is complete, the views will automatically update to display the results.
 
 ## Second case study - crimes
@@ -64,7 +64,7 @@ The second case study employs the files in the `crimes` folder. Upon downloading
    - Attributes: `Type`, `Location` and `Time`.
    - Thresholds: Min sup: `0.1`, Min lift: `1.5`, Res: `2.5`.
    - Dates: `2016-01` to `2019-12`.
-   Configure the tool with these options and click on **Filter**. Because this dataset is larger, processing will take longer than in the first case study.
+Configure the tool with these options and click on **Filter**. Because this dataset is larger, processing will take longer than in the first case study.
 6. The tool will process the data to generate rules and clusters. Once processing is complete, the views will automatically update to display the results.
 
 ## Notes
@@ -75,3 +75,4 @@ STRive supports uploading other categorical spatiotemporal datasets. For details
 
 ## Contact
 If you encounter an error or have any questions, please feel free to contact me at dany.mauro.diaz.e@gmail.com or dany.espino@fgv.br
+
