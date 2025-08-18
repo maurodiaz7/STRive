@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<!--<html lang="en" data-theme="business">-->
+<html lang="en" data-theme="business">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>STRive</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Quicksand:wght@300..700&family=Roboto:ital,wght@0,100..900;1,100..900&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <script src="{{url_for('static', filename='reorder.min.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://d3js.org/topojson.v1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5.0.0/themes.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/daisyui@5/colors/properties.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/daisyui@5/colors/properties-extended.css"
+    />
+
+    <!--Leaflet-->
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='/css/leaflet.css')}}"
+    />
+    <script src="{{url_for('static', filename='/js/leaflet.js')}}"></script>
+
+    <link href="./static/css/style.css" rel="stylesheet" type='text/css' />
+  </head>
+
+  <body>
+    <div
+      class="navbar bg-base-100 shadow-sm h-10 min-h-0 p-0 flex justify-between items-center px-2"
+    >
+      <!--<div class="flex-none">-->
+      <!--<label for="my-drawer" class="btn btn-square btn-ghost">-->
+      <!--<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-5 w-5 stroke-current"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path> </svg>-->
+      <!--</label>-->
+      <!--</div>-->
+      <!--<label for="my-drawer" class="btn btn-primary drawer-button">Open drawer</label>-->
+
+      <div class="flex tracking-widest font-bold">
+        <!--<div class="drawer">
+          <input id="my-drawer" type="checkbox" class="drawer-toggle" checked />
+          <div class="drawer-content flex items-center">
+            <label for="my-drawer" class="drawer-button cursor-pointer">
+              <svg
+                data-v-56bd7dfc=""
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-align-justify-icon lucide-align-justify"
+              >
+                <path d="M3 12h18"></path>
+                <path d="M3 18h18"></path>
+                <path d="M3 6h18"></path>
+              </svg>
+            </label>
+          </div>
+          <div class="drawer-side">
+            <label
+              for="my-drawer"
+              aria-label="close sidebar"
+              class="drawer-overlay"
+            ></label>
+            <ul class="bg-base-200 text-base-content min-h-full w-96 p-4 overflow-y-auto">
+              <h4 class="mb-4">Select dataset</h4>
+              <div class="form-control mb-6">
+                <ul class="flex flex-col gap-4 mb-4">
+                  <li>
+                    <input
+                      type="radio"
+                      id="dataset-accidents"
+                      name="dataset"
+                      value="accidents"
+                      class="hidden peer"
+                    />
+                    <label
+                      for="dataset-accidents"
+                      class="flex flex-col w-full p-5 text-base-content bg-base-200 border-2 border-transparent rounded-lg cursor-pointer hover:border-primary peer-checked:border-primary peer-checked:border-4 transition-colors"
+                    >
+                      <div class="flex items-center mb-2">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="28"
+                          height="28"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="text-primary mr-3 flex-shrink-0"
+                        >
+                          <path d="M9 3H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2Z" />
+                          <path d="M19 3h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2Z" />
+                          <path d="M9 13H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Z" />
+                          <path d="M19 13h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Z" />
+                        </svg>
+                        <span class="text-lg font-semibold">Accidents</span>
+                      </div>
+                      <div class="text-sm">
+                        Traffic collision data analysis for spatial-temporal pattern
+                        discovery
+                      </div>
+                    </label>
+                  </li>
+                  <li>
+                    <input
+                      type="radio"
+                      id="dataset-crimes"
+                      name="dataset"
+                      value="crimes"
+                      class="hidden peer"
+                      checked
+                    />
+                    <label
+                      for="dataset-crimes"
+                      class="flex flex-col w-full p-5 text-base-content bg-base-200 border-2 border-transparent rounded-lg cursor-pointer hover:border-primary peer-checked:border-primary peer-checked:border-4 transition-colors"
+                    >
+                      <div class="flex items-center mb-2">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="28"
+                          height="28"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="text-primary mr-3 flex-shrink-0"
+                        >
+                          <path d="M9 3H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Z" />
+                          <path d="M19 3h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2Z" />
+                          <path d="M9 13H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Z" />
+                          <path d="M19 13h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Z" />
+                        </svg>
+                        <span class="text-lg font-semibold">Crimes</span>
+                      </div>
+                      <div class="text-sm">
+                        Urban crime data exploration for pattern detection and
+                        analysis
+                      </div>
+                    </label>
+                  </li>
+                </ul>
+              </div>
+              <button class="btn btn-primary w-full text-base py-2 mt-2" id="select-dataset-main">
+                Select Dataset
+              </button>
+              
+              <script src="/static/js/dataset_selection.js"></script>
+            </ul>
+          </div>
+        </div>-->
+        <a class="btn btn-ghost text-lg" style="pointer-events: none">
+          <!--<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" style="fill: var(--color-neutral-content);transform: ;msFilter:;"><path d="M20.875 7H3.125C1.953 7 1 7.897 1 9v6c0 1.103.953 2 2.125 2h17.75C22.047 17 23 16.103 23 15V9c0-1.103-.953-2-2.125-2zm0 8H3.125c-.057 0-.096-.016-.113-.016-.007 0-.011.002-.012.008l-.012-5.946c.007-.01.052-.046.137-.046H5v3h2V9h2v4h2V9h2v3h2V9h1.875c.079.001.122.028.125.008l.012 5.946c-.007.01-.052.046-.137.046z"></path></svg>-->
+          <!--<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" style="fill: var(--color-neutral-content);transform: ;msFilter:;"><path d="M20.875 7H3.125C1.953 7 1 7.897 1 9v6c0 1.103.953 2 2.125 2h17.75C22.047 17 23 16.103 23 15V9c0-1.103-.953-2-2.125-2zM7 12H5V9h2v3zm4 1H9V9h2v4zm4-1h-2V9h2v3zm4 1h-2V9h2v4h2V9h1.875c.079.001.122.028.125.008l.012 5.946c-.007.01-.052.046-.137.046z"></path></svg>-->
+          STRive: SpatioTemporal Rule Interactive Visual Explorer
+        </a>
+      </div>
+
+      <div role="tablist" class="tabs tabs-box tabs-sm">
+        <label class="tab">
+          <input id="tab-clusters" type="radio" name="my_tabs_4" checked />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-4 me-2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z"
+            />
+          </svg>
+          Clusters
+        </label>
+        <label id="tab-rules-component" class="tab tab-disabled">
+          <input id="tab-rules" type="radio" name="my_tabs_4" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-4 me-2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z"
+            />
+          </svg>
+          Rules
+        </label>
+      </div>
+    </div>
+    <div
+      id="content"
+      class="min-h-[calc(100vh-40px)] h-full outline outline-white/5 bg-neutral-content flex gap-1 flex-col justify-center p-2"
+    >
+      <div
+        class="h-full grid grid-cols-5 gap-1 rounded-lg text-left leading-6 text-neutral"
+      >
+        <div
+          class="rounded-md h-[calc((100vh-40px-var(--spacing)*5)/2)] shadow-sm"
+        >
+          <div
+            class="flex flex-col rounded-md bg-white p-1"
+            style="height: 100%; width: 100%"
+          >
+            <div class="component-header text-sm tracking-widest font-bold">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <path d="M7 11h10v2H7zM4 7h16v2H4zm6 8h4v2h-4z"></path>
+              </svg>
+              Control Panel
+            </div>
+            <div id="control-panel" class="text-xs">
+
+              <div id="control-content1" class="h-full w-full hidden">
+                <div
+                  class="flex flex-col items-center bg-white h-3/8 w-full p-1 border-b-1 border-gray-300">
+                  <div class="flex justify-center tracking-widest font-bold">
+                    ATTRIBUTES
+                  </div>
+                  <div class="h-full w-full">
+                    <div class="grid grid-cols-4 gap-1 p-1 h-full" id="column-container">
+                      <!--columns here-->
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="flex flex-col justify-evenly p-1 h-3/8 border-b-1 border-gray-300"
+                >
+                  <div class="flex justify-center tracking-widest font-bold">
+                    THRESHOLD - RULES
+                  </div>
+                  <div class="flex p-1">
+                    <div class="text-gray-700 font-medium mb-2 w-1/4 text-xs">
+                      Min sup: <span id="supportValue">0.05</span>
+                    </div>
+                    <div class="relative w-3/4">
+                      <input
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.01"
+                        value="0.05"
+                        class="range range-primary range-xs"
+                        id="supportSlider"
+                      />
+                    </div>
+                  </div>
+                  <div class="flex p-1">
+                    <div class="text-gray-700 font-medium mb-2 w-1/4 text-xs">
+                      Min lift: <span id="liftValue">1.05</span>
+                    </div>
+                    <div class="relative w-3/4">
+                      <input
+                        type="range"
+                        min="0"
+                        max="2"
+                        step="0.05"
+                        value="1.05"
+                        class="range range-primary range-xs"
+                        id="liftSlider"
+                      />
+                    </div>
+                  </div>
+                  <div class="flex justify-center tracking-widest font-bold">
+                    THRESHOLD - CLUSTERING
+                  </div>
+                  <div class="flex p-1">
+                    <div class="text-gray-700 font-medium mb-2 w-1/4 text-xs">
+                      Res : <span id="sliderValue">1.0</span>
+                    </div>
+                    <div class="relative w-3/4">
+                      <input
+                        type="range"
+                        min="0.1"
+                        max="5"
+                        step="0.1"
+                        value="1.0"
+                        class="range range-primary range-xs"
+                        id="rangeSlider"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="flex h-1/8 p-2 border-b-1 border-gray-300">
+                  <div
+                    class="w-1/4 h-full flex items-center tracking-widest font-bold"
+                  >
+                    DATES
+                  </div>
+                  <div class="flex w-3/4 items-center bg-white">
+                    <div>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M21 20V6c0-1.103-.897-2-2-2h-2V2h-2v2H9V2H7v2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2zM9 18H7v-2h2v2zm0-4H7v-2h2v2zm4 4h-2v-2h2v2zm0-4h-2v-2h2v2zm4 4h-2v-2h2v2zm0-4h-2v-2h2v2zm2-5H5V7h14v2z"
+                        ></path>
+                      </svg>
+                    </div>
+                    <input
+                      type="text"
+                      class="input pika-single font-sm h-full bg-primary-content"
+                      id="selStart"
+                      value="2000-01-01"
+                    />
+                    To
+                    <input
+                      type="text"
+                      class="input pika-single font-sm h-full bg-primary-content"
+                      id="selEnd"
+                      value="2000-01-01"
+                    />
+                  </div>
+                </div>
+                <div class="flex h-1/8 items-center justify-center">
+                  <button
+                    class="btn btn-primary btn-sm text-xs tracking-widest font-bold"
+                    id="filter-clusters"
+                  >
+                    Filter
+                  </button>
+                </div>
+              </div>
+              <div id="control-content2" class="flex flex-col h-full w-full justify-center">
+                <div class="flex flex-col items-center">
+                  <fieldset class="fieldset">
+
+                    <legend class="fieldset-legend text-black">
+                      Upload dataset
+                    </legend>
+                    <input type="file" class="file-input file-input-primary file-input-sm bg-white" id="csv-input" accept=".csv"/>
+                    <label class="fieldset-label text-gray-900">in CSV format</label>
+              
+                    <legend class="fieldset-legend text-black">
+                      Upload geodata
+                    </legend>
+
+                    <input type="file" class="file-input file-input-primary file-input-sm bg-white" id="json-input" accept=".json, .geojson"/>
+                    <label class="fieldset-label text-gray-900">in JSON or GeoJSON format</label>
+                  </fieldset>
+                  <div class="btn btn-sm btn-primary mt-2" id="uploadBtn">Upload</div>
+
+                </div>
+              </div>
+              
+            </div>
+
+            <!--End control panel-->
+          </div>
+        </div>
+        <div
+          class="rounded-md h-[calc((100vh-40px-var(--spacing)*5)/2)] shadow-sm"
+        >
+          <div
+            class="rounded-md flex-col bg-white p-1"
+            style="height: 100%; width: 100%"
+          >
+            <div class="component-header text-sm tracking-widest font-bold">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <path d="M4 21h17v-2H5V3H3v17a1 1 0 0 0 1 1z"></path>
+                <circle cx="10" cy="8" r="2"></circle>
+                <circle cx="18" cy="12" r="2"></circle>
+                <circle cx="11.5" cy="13.5" r="1.5"></circle>
+                <circle cx="16.5" cy="6.5" r="1.5"></circle>
+              </svg>
+              Cluster Scatterplot
+            </div>
+            <div id="scatterplot-content"></div>
+          </div>
+        </div>
+        <div
+          class="rounded-md h-[calc((100vh-40px-var(--spacing)*5)/2)] col-span-3 shadow-md"
+        >
+          <div
+            class="rounded-md flex-col bg-white p-1"
+            style="height: 100%; width: 100%"
+          >
+            <div
+              class="component-header flex justify-between text-sm tracking-widest font-bold"
+            >
+              <span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zM4 12c0-.899.156-1.762.431-2.569L6 11l2 2v2l2 2 1 1v1.931C7.061 19.436 4 16.072 4 12zm14.33 4.873C17.677 16.347 16.687 16 16 16v-1a2 2 0 0 0-2-2h-4v-3a2 2 0 0 0 2-2V7h1a2 2 0 0 0 2-2v-.411C17.928 5.778 20 8.65 20 12a7.947 7.947 0 0 1-1.67 4.873z"
+                  ></path>
+                </svg>
+                Map View - Clusters
+              </span>
+              <label class="inline-flex items-center cursor-pointer">
+                <input
+                  id="toggleSwitch"
+                  type="checkbox"
+                  class="sr-only peer"
+                  value="off"
+                />
+                <div
+                  class="relative w-8 h-4 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-0 after:left-0 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-500"
+                ></div>
+                <span class="ml-3 text-sm font-medium text-gray-700"
+                  >Per capita</span
+                >
+              </label>
+            </div>
+            <div id="map-view"></div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="grid grid-cols-5 gap-1 rounded-md text-left leading-6 text-neutral"
+      >
+        <div
+          class="rounded-md h-[calc((100vh-40px-var(--spacing)*5)/2)] col-span-2 shadow-md"
+        >
+          <div
+            class="rounded-md flex-col bg-white p-1"
+            style="height: 100%; width: 100%"
+          >
+            <div class="component-header text-sm tracking-widest font-bold">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M19.5 3A2.502 2.502 0 0 0 17 5.5c0 .357.078.696.214 1.005l-1.955 2.199A3.977 3.977 0 0 0 13 8c-.74 0-1.424.216-2.019.566L8.707 6.293l-.023.023C8.88 5.918 9 5.475 9 5a3 3 0 1 0-3 3c.475 0 .917-.12 1.316-.316l-.023.023L9.567 9.98A3.956 3.956 0 0 0 9 12c0 .997.38 1.899.985 2.601l-2.577 2.576A2.472 2.472 0 0 0 6.5 17C5.122 17 4 18.121 4 19.5S5.122 22 6.5 22 9 20.879 9 19.5c0-.321-.066-.626-.177-.909l2.838-2.838c.421.15.867.247 1.339.247 2.206 0 4-1.794 4-4 0-.636-.163-1.229-.428-1.764l2.117-2.383c.256.088.526.147.811.147C20.879 8 22 6.879 22 5.5S20.879 3 19.5 3zM13 14c-1.103 0-2-.897-2-2s.897-2 2-2 2 .897 2 2-.897 2-2 2z"
+                ></path>
+              </svg>
+              Attributes View - Clusters
+            </div>
+            <div id="cluster-view-header"></div>
+            <!-- Added overflow-auto to handle overflow -->
+            <div id="cluster-view" class="overflow-auto"></div>
+          </div>
+        </div>
+        <!-- Cluster Heatmap Container -->
+        <div
+          class="rounded-md h-[calc((100vh-40px-var(--spacing)*5)/2)] col-span-3 shadow-lg"
+        >
+          <div
+            class="rounded-md flex-col bg-white p-1"
+            style="height: 100%; width: 100%"
+          >
+            <div class="component-header text-sm tracking-widest font-bold">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M15 3H4.984c-1.103 0-2 .897-2 2v14.016c0 1.103.897 2 2 2H19c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2h-4zm4 5h-3V5h3v3zM4.984 10h3v4.016h-3V10zm5 0H14v4.016H9.984V10zM16 10h3v4.016h-3V10zm-2-5v3H9.984V5H14zM7.984 5v3h-3V5h3zm-3 11.016h3v3h-3v-3zm5 3v-3H14v3H9.984zm6.016 0v-3h3.001v3H16z"
+                ></path>
+              </svg>
+              Heatmap View - Clusters
+            </div>
+            <div id="cluster-heatmap-header"></div>
+            <!-- Added overflow-auto to handle overflow -->
+            <div id="cluster-heatmap" class="overflow-auto"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      id="rules-content"
+      class="min-h-[calc(100vh-40px)] h-full outline outline-white/5 bg-neutral-content flex gap-1 flex-col justify-center px-2 hidden"
+    >
+      <div class="grid grid-cols-5 gap-2">
+        <div
+          class="rounded-lg bg-neutral-content h-[calc((100vh-40px-var(--spacing)*5)/2)] col-span-3 shadow-lg"
+        >
+          <div
+            class="rounded-md flex-col bg-white p-1"
+            style="height: 100%; width: 100%"
+          >
+            <div
+              class="component-header flex justify-between text-sm text-black tracking-widest font-bold"
+            >
+              <span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zM4 12c0-.899.156-1.762.431-2.569L6 11l2 2v2l2 2 1 1v1.931C7.061 19.436 4 16.072 4 12zm14.33 4.873C17.677 16.347 16.687 16 16 16v-1a2 2 0 0 0-2-2h-4v-3a2 2 0 0 0 2-2V7h1a2 2 0 0 0 2-2v-.411C17.928 5.778 20 8.65 20 12a7.947 7.947 0 0 1-1.67 4.873z"
+                  ></path>
+                </svg>
+                Map View - Rules
+              </span>
+            </div>
+            <!-- Added overflow-auto to handle overflow -->
+            <div id="rules-map-view" class="overflow-auto text-gray-900"></div>
+          </div>
+        </div>
+      
+        <div class="rounded-lg bg-neutral-content h-[calc((100vh-40px-var(--spacing)*5)/2)] col-span-2 shadow-lg">
+         <div class="rounded-md flex-col bg-white p-1" style="height: 100%;width: 100%;">
+            <div class="component-header text-sm text-black tracking-widest font-bold flex justify-between items-center">
+               <div class="flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;">
+                     <path d="M20 2H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h3v3.767L13.277 18H20c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2zm0 14h-7.277L9 18.233V16H4V4h16v12z"></path>
+                     <path d="M7 7h10v2H7zm0 4h7v2H7z"></path>
+                  </svg>
+                  LLM Explanation
+               </div>
+               <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-medium px-3 rounded border border-gray-300 hover:border-gray-400 transition-all duration-150 whitespace-nowrap" onclick="explainRules()">
+                  Explain
+               </button>
+            </div>
+            <div id="llm-results">
+               <p class="text-gray-500 italic">Rule explanations will appear here..</p>
+            </div>
+         </div>
+      </div>
+
+        <div
+          class="rounded-lg bg-neutral-content h-[calc((100vh-40px-var(--spacing)*5)/2)] col-span-2 shadow-lg"
+        >
+          <div
+            class="rounded-md flex-col bg-white p-1"
+            style="height: 100%; width: 100%"
+          >
+            <div
+              class="component-header text-sm text-black tracking-widest font-bold"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M19.5 3A2.502 2.502 0 0 0 17 5.5c0 .357.078.696.214 1.005l-1.955 2.199A3.977 3.977 0 0 0 13 8c-.74 0-1.424.216-2.019.566L8.707 6.293l-.023.023C8.88 5.918 9 5.475 9 5a3 3 0 1 0-3 3c.475 0 .917-.12 1.316-.316l-.023.023L9.567 9.98A3.956 3.956 0 0 0 9 12c0 .997.38 1.899.985 2.601l-2.577 2.576A2.472 2.472 0 0 0 6.5 17C5.122 17 4 18.121 4 19.5S5.122 22 6.5 22 9 20.879 9 19.5c0-.321-.066-.626-.177-.909l2.838-2.838c.421.15.867.247 1.339.247 2.206 0 4-1.794 4-4 0-.636-.163-1.229-.428-1.764l2.117-2.383c.256.088.526.147.811.147C20.879 8 22 6.879 22 5.5S20.879 3 19.5 3zM13 14c-1.103 0-2-.897-2-2s.897-2 2-2 2 .897 2 2-.897 2-2 2z"
+                ></path>
+              </svg>
+              Attributes View - Rules
+            </div>
+            <div id="cluster-view-rules-header"></div>
+            <!-- Added overflow-auto to handle overflow -->
+            <div id="cluster-view-rules" class="overflow-auto"></div>
+          </div>
+        </div>
+        <!-- Cluster Heatmap Container -->
+        <div
+          class="rounded-lg bg-accent h-[calc((100vh-40px-var(--spacing)*5)/2)] col-span-3 shadow-lg"
+        >
+          <div
+            class="rounded-md flex-col bg-white p-1"
+            style="height: 100%; width: 100%"
+          >
+            <div
+              class="component-header text-sm text-black tracking-widest font-bold"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M15 3H4.984c-1.103 0-2 .897-2 2v14.016c0 1.103.897 2 2 2H19c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2h-4zm4 5h-3V5h3v3zM4.984 10h3v4.016h-3V10zm5 0H14v4.016H9.984V10zM16 10h3v4.016h-3V10zm-2-5v3H9.984V5H14zM7.984 5v3h-3V5h3zm-3 11.016h3v3h-3v-3zm5 3v-3H14v3H9.984zm6.016 0v-3h3.001v3H16z"
+                ></path>
+              </svg>
+              Heatmap View - Rules
+            </div>
+            <div id="cluster-heatmap-rules-header"></div>
+            <!-- Added overflow-auto to handle overflow -->
+            <div id="cluster-heatmap-rules" class="overflow-auto"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="scatterplot-controls-x" class="dropdown bg-white text-black">
+      <!--<label for="x-axis">x-axis :</label>-->
+      <select name="x-axis" id="x-axis">
+        <option value="rules">Rules</option>
+        <option value="mean-support">Mean support</option>
+        <option value="mean-confidence">Mean confidence</option>
+        <option value="max-lift">Max lift</option>
+        <option value="mean-lift" selected>Mean lift</option>
+        <option value="min-lift">Min lift</option>
+        <option value="mean-occurrences">Mean occurrences</option>
+      </select>
+    </div>
+    <div id="scatterplot-controls-y" class="dropdown bg-white text-black">
+      <!--<label for="y-axis">y-axis :</label>-->
+      <select name="y-axis" id="y-axis">
+        <option value="rules">Rules</option>
+        <option value="mean-support">Mean support</option>
+        <option value="mean-confidence" selected>Mean confidence</option>
+        <option value="max-lift">Max lift</option>
+        <option value="mean-lift">Mean lift</option>
+        <option value="min-lift">Min lift</option>
+        <option value="mean-occurrences">Mean occurrences</option>
+      </select>
+    </div>
+	<div id="tooltip"></div>
+  </body>
+  <script src="{{url_for('static', filename='/js/utils.js')}}"></script>
+	<script type="text/javascript">
+		document.getElementById('uploadBtn').addEventListener('click', function (){
+		let csvFile = document.getElementById("csv-input").files[0];
+    	let jsonFile = document.getElementById("json-input").files[0];
+    
+		if (!csvFile || !jsonFile) {
+			alert("Please upload both files");
+			return;
+		}
+
+		let formData = new FormData();
+    	formData.append("csv", csvFile);
+    	formData.append("json", jsonFile);
+
+    	$.ajax({
+			url: '/upload_files',
+			type: 'POST',
+			processData: false,  // important
+			contentType: false,  // important
+			data: formData,
+			success: function (response) {
+				createCheckboxes(response.columns, 'column-container');
+				createDatePickers(response.dates[0], response.dates[response.dates.length-1], 'selStart', 'selEnd');
+				d3.select("#control-content1").classed("hidden", false);
+				d3.select("#control-content2").classed("hidden", true);
+
+				globalState.setDates(response.dates);
+		},
+			error: function (error) {
+			console.error('Error:', error);
+		}
+		});
+  	});
+  </script>
+
+  <script src="{{url_for('static', filename='/js/cache.js')}}"></script>
+  <script src="{{url_for('static', filename='/js/range.js')}}"></script>
+  <script src="{{url_for('static', filename='/js/draw.js')}}"></script>
+  <script src="{{url_for('static', filename='/js/rules.js')}}"></script>
+  <script src="{{url_for('static', filename='/js/state.js')}}"></script>
+  <script src="{{url_for('static', filename='/js/scroll.js')}}"></script>
+  <script src="{{url_for('static', filename='/js/map.js')}}"></script>
+  <script src="{{url_for('static', filename='/llm/llm.js')}}"></script>
+  <script src="{{url_for('static', filename='main.js')}}"></script>
+</html>
